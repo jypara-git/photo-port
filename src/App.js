@@ -5,7 +5,9 @@ import About from './components/About';
 import Gallery from './components/Gallery';
 import ContactForm from './components/Contact';
 
+
 function App() {
+  const [contactSelected, setContactSelected] = useState(false);
   const [categories] = useState([
     {
       name: 'commercial',
@@ -22,12 +24,21 @@ function App() {
         categories={categories}
         setCurrentCategory={setCurrentCategory}
         currentCategory={currentCategory}
+        contactSelected={contactSelected}
+        setContactSelected={setContactSelected}
       />
       <main>
-        <ContactForm></ContactForm>
-        <Gallery
-          currentCategory={currentCategory}></Gallery>
-        <About></About>
+        {/* this statement declares that if the contactSelected is false, the 
+        Gallery and About components should be rendered */}
+        {!contactSelected ? (
+          // React fragment allows to wrap elements without creating extra DOM nodes
+          <>
+            <Gallery currentCategory={currentCategory}></Gallery>
+            <About></About>
+          </>
+        ) : (
+          <ContactForm></ContactForm>
+        )}
       </main>
     </div>
   );
